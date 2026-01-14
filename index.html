@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamIt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0A0A0F">
+
+<body>
+    <div class="app-container">
+        <div class="bg-gradient"></div>
+        <div class="bg-grid"></div>
+        
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+                    <path d="M10 8L24 16L10 24V8Z" fill="currentColor"/>
+                </svg>
+                <span class="logo-text">Stream<span>It</span></span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="url-section" id="urlSection">
+                <div class="glass-card">
+                    <h2>Enter Stream URL</h2>
+                    <div class="input-group">
+                        <input type="text" id="videoUrl" placeholder="https://example.com/video.mp4" spellcheck="false">
+                        <button id="loadBtn" class="primary-btn">Load Player</button>
+                    </div>
+                    <div class="proxy-toggle">
+                        <label class="switch">
+                            <input type="checkbox" id="useProxy">
+                            <span class="slider"></span>
+                        </label>
+                        <span>Use StreamFlow Proxy (Bypass CORS)</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="player-section" id="playerSection" style="display: none;">
+                <div class="player-container" id="playerContainer">
+                    <video id="videoPlayer" playsinline></video>
+                    
+                    <div class="loading-overlay" id="loadingOverlay">
+                        <div class="loader"></div>
+                    </div>
+
+                    <div class="play-overlay" id="playOverlay">
+                        <div class="play-icon-large">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+
+                    <div class="controls" id="controls">
+                        <div class="progress-area">
+                            <div class="progress-bar">
+                                <div class="buffer-bar" id="bufferBar"></div>
+                                <div class="current-progress" id="currentProgress"></div>
+                                <div class="progress-handle"></div>
+                            </div>
+                        </div>
+
+                        <div class="controls-main">
+                            <div class="controls-left">
+                                <button class="ctrl-btn" id="playPauseBtn">
+                                    <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                                </button>
+                                <div class="time-display">
+                                    <span id="currentTime">0:00</span>
+                                    <span class="time-sep">/</span>
+                                    <span id="duration">0:00</span>
+                                </div>
+                            </div>
+
+                            <div class="controls-right">
+                                <div class="menu-container">
+                                    <button class="ctrl-btn" id="audioBtn" title="Audio Tracks" style="display: none;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                                    </button>
+                                    <div class="player-menu" id="audioMenu">
+                                        <div class="menu-header">Audio Tracks</div>
+                                        <div id="audioTracksList"></div>
+                                    </div>
+                                </div>
+
+                                <div class="menu-container">
+                                    <button class="ctrl-btn" id="speedBtn">1x</button>
+                                    <div class="player-menu" id="speedMenu">
+                                        <div class="menu-header">Playback Speed</div>
+                                        <div class="speed-option" data-speed="0.5">0.5x</div>
+                                        <div class="speed-option active" data-speed="1">Normal</div>
+                                        <div class="speed-option" data-speed="1.5">1.5x</div>
+                                        <div class="speed-option" data-speed="2">2x</div>
+                                    </div>
+                                </div>
+
+                                <button class="ctrl-btn" id="pipBtn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 11h-8v5h8v-5zM21 19H3V5h18v14z"/></svg>
+                                </button>
+                                <button class="ctrl-btn" id="fullscreenBtn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="backBtn" class="back-link">← Back to URL entry</button>
+            </section>
+        </main>
+    </div>
+    <script src="player.js"></script>
+</body>
+</html>
